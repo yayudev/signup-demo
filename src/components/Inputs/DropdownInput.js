@@ -48,18 +48,21 @@ export class DropdownInput extends Component {
       <div className="container">
         <label className="label">{text}</label>
         <select
-          className="input"
+          className="select"
           defaultValue={selectedValue}
           onChange={this.handleChange}
           tabIndex={tabindex}
         >
-          <option value="" className="option" disabled></option>
 
+          <option value="" className="option" disabled></option>
           {values.map(this.renderDropdownOption)}
+
         </select>
+        <i className="material-icons icon"> keyboard_arrow_down </i>
 
         <style jsx>{`
           .container {
+            position: relative;
             width: calc(100% - 4em);
           }
 
@@ -69,8 +72,12 @@ export class DropdownInput extends Component {
             text-transform: uppercase;
           }
 
-          .input {
+          .select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
             display: block;
+            background: white;
+            cursor: pointer;
             width: 100%;
             max-width: 100%;
             padding: 1em;
@@ -82,8 +89,16 @@ export class DropdownInput extends Component {
             border: 1px solid ${BORDER_COLOR};
           }
 
-          .input:focus {
+          .select:focus {
             border-color: ${MAIN_COLOR};
+          }
+
+          .icon {
+            color: ${MAIN_COLOR};
+            pointer-events: none;
+            position: absolute;
+            bottom: .3em;
+            right: .5em;
           }
 
           .option {

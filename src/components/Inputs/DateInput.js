@@ -125,8 +125,9 @@ export class DateInput extends Component {
           }
 
           .date-input {
+            -moz-appearance: textfield;
             font-size: 1em;
-            width: 100%;
+            width: 33.33%;
             text-align: center;
             padding: .75em 0;
             border: 2px solid transparent;

@@ -136,7 +136,7 @@ export const SignupStepTwo = reduxForm({
   initialValues: {
     birthDate: { day: '', month: '', year: '' },
     gender: { index: 2, text: 'Unspecified' },
-    howHearAboutUs: ' '
+    howHearAboutUs: ''
   },
   validate,
   onSubmit: x => x
