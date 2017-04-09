@@ -1,13 +1,15 @@
 import React from 'react'
 import { SignupStepOne } from './SignupStepOne'
 import { SignupStepTwo } from './SignupStepTwo'
+import { SignupStepThree } from './SignupStepThree'
 
 
-export function SignupContent ({ step = 2 }) {
+export function SignupContent ({ step = 3 }) {
   return (
     <div className="container">
       <SignupStepOne step={step} />
       <SignupStepTwo step={step} />
+      <SignupStepThree step={step} />
 
       <style jsx>{`
         .container {

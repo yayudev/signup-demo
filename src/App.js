@@ -6,7 +6,7 @@ import { SignupContent } from './containers'
 
 export const App = () => (
   <div className="container">
-    <Header title="Signup" step={2} totalSteps={3} />
+    <Header title="Signup" step={3} totalSteps={3} />
 
     <SignupContent />
 
