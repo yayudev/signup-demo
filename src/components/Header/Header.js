@@ -1,15 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import { HeaderTitle } from './HeaderTitle'
 import { HeaderProgressBar } from './HeaderProgressBar'
 
 
-export const Header = ({ title, step, totalSteps }) => (
-  <div>
-    <HeaderTitle title={title} />
-    <HeaderProgressBar step={step} totalSteps={totalSteps} />
-  </div>
-)
+export function Header ({ title, step, totalSteps }) {
+  return (
+    <div>
+      <HeaderTitle title={title} />
+      <HeaderProgressBar step={step} totalSteps={totalSteps} />
+    </div>
+  )
+}
 
 
 Header.propTypes = {

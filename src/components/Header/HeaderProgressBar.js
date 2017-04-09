@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import { MAIN_COLOR, BORDER_COLOR } from '../../config/colors'
 
-export const HeaderProgressBar = ({ step, totalSteps }) => {
+export function HeaderProgressBar ({ step, totalSteps }) {
   const currentStep = (step >= 1 && step <= 3) ? step : 1
   const currentProgress = (currentStep / totalSteps)
   const widthStyle = { transform: `scaleX(${currentProgress})` }
