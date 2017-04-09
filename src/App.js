@@ -1,21 +1,13 @@
 import React from 'react'
 import { BORDER_COLOR } from './config/colors'
-import { Header, Footer } from './components'
-import { SignupContent } from './containers'
+import { Header, Footer, SignupContent } from './containers'
 
 
 export const App = () => (
   <div className="container">
-    <Header title="Signup" step={3} totalSteps={3} />
-
+    <Header />
     <SignupContent />
-
-    <Footer
-      step={2}
-      totalSteps={3}
-      onBackClick={_ => console.log('back')}
-      onNextClick={_ => console.log('next')}
-    />
+    <Footer />
 
     <style jsx>{`
       .container {

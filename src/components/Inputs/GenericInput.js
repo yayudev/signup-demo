@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import {
   MAIN_COLOR,
   TEXT_COLOR,
+  SUCCESS_TEXT_COLOR,
   DANGER_TEXT_COLOR,
   UNFOCUS_TEXT_COLOR
 } from '../../config/colors'
@@ -13,10 +14,10 @@ export class GenericInput extends Component {
   static propTypes = {
     onChange: PropTypes.func,
     onBlur: PropTypes.func,
-    name: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
     isPassword: PropTypes.bool,
+    touched: PropTypes.bool,
     error: PropTypes.string,
     navigable: PropTypes.bool
   }
@@ -24,6 +25,7 @@ export class GenericInput extends Component {
   static defaultProps = {
     isPassword: false,
     error: '',
+    touched: false,
     navigable: true,
     onChange: _ => {},
     onBlur: _ => {}
@@ -49,11 +51,12 @@ export class GenericInput extends Component {
 
 
   render () {
-    const { name, text, value, isPassword, error, navigable } = this.props
+    const { text, value, isPassword, touched, error, navigable } = this.props
     const inputType = isPassword ? 'password' : 'text'
-    const label = error || text
+    const label = (touched && error) || text
 
-    const labelClasses =  error ? 'label error' : 'label'
+    const errorClasses = touched && error ? 'label error' : 'label'
+    const labelClasses = touched ? `${errorClasses} touched` : errorClasses
     const tabindex = navigable ? '0' : '-1'
 
     return (
@@ -63,7 +66,6 @@ export class GenericInput extends Component {
         <input
           type={inputType}
           className="input"
-          name={name}
           value={value}
           tabIndex={tabindex}
           onChange={this.handleChange}
@@ -94,6 +96,13 @@ export class GenericInput extends Component {
           .label {
             font-size: 1em;
             text-transform: uppercase;
+          }
+
+          .label.touched {
+            color: ${SUCCESS_TEXT_COLOR};
+          }
+          .label.touched + .input {
+            border-bottom: 1px solid ${SUCCESS_TEXT_COLOR};
           }
 
           .label.error {

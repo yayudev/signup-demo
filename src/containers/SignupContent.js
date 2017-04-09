@@ -1,10 +1,11 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { SignupStepOne } from './SignupStepOne'
 import { SignupStepTwo } from './SignupStepTwo'
 import { SignupStepThree } from './SignupStepThree'
 
 
-export function SignupContent ({ step = 3 }) {
+function SignupContentComponent ({ step = 1 }) {
   return (
     <div className="container">
       <SignupStepOne step={step} />
@@ -22,3 +23,11 @@ export function SignupContent ({ step = 3 }) {
     </div>
   )
 }
+
+
+const mapStateToProps = state => ({
+  step: state.signup.step
+})
+
+
+export const SignupContent = connect(mapStateToProps)(SignupContentComponent)

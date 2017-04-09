@@ -1,3 +1,5 @@
+export * from './Footer'
+export * from './Header'
 export * from './SignupContent'
 export * from './SignupStepOne'
 export * from './SignupStepTwo'

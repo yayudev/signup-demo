@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Field, reduxForm  } from 'redux-form'
 
 import { GenericInput } from '../components'
 
 
-export class SignupStepOne extends Component {
+class SignupStepOneComponent extends Component {
   static propTypes = {
     step: PropTypes.number
   }
@@ -19,31 +20,34 @@ export class SignupStepOne extends Component {
     this.createGenericInput = this.createGenericInput.bind(this)
   }
 
-  createGenericInput (name, label, isPassword = false) {
-    return () => (
+  createGenericInput (label, isPassword = false) {
+    return ({ input, meta: { touched, error } }) => (
       <GenericInput
         text={label}
-        name={name}
-        value=""
+        error={error}
+        touched={touched}
+        value={input.value}
         isPassword={isPassword}
+        onChange={input.onChange}
+        onBlur={input.onBlur}
         navigable={this.props.step === 1}
       />
     )
   }
 
-
   render () {
-    const EmailInput = this.createGenericInput('email', 'email', false)
-    const Password = this.createGenericInput('pass', 'password', false)
-    const PasswordConfirm = this.createGenericInput('passConf', 'confirm password', false)
+    const { step, handleSubmit } = this.props
+    const emailComponent = this.createGenericInput('Email')
+    const passwordComponent = this.createGenericInput('Password', true)
+    const confirmPasswordComponent = this.createGenericInput('Confirm Password', true)
 
-    const containerClasses = this.props.step === 1 ? 'container show' : 'container'
+    const containerClasses = step === 1 ? 'container show' : 'container'
 
     return (
-      <div className={containerClasses}>
-        <EmailInput />
-        <Password />
-        <PasswordConfirm />
+      <form className={containerClasses} onSubmit={handleSubmit}>
+        <Field name="email" component={emailComponent} />
+        <Field name="password" component={passwordComponent} />
+        <Field name="passwordConfirmation" component={confirmPasswordComponent} />
 
         <style jsx>{`
           .container {
@@ -65,7 +69,39 @@ export class SignupStepOne extends Component {
             transform: translateX(0);
           }
         `}</style>
-      </div>
+      </form>
     )
   }
 }
+
+
+function validate (values) {
+  const errors = {}
+
+  if (!values.email) {
+    errors.email = 'Email required'
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = 'Invalid email address'
+  }
+
+  if (!values.password) {
+    errors.password = 'Password required'
+  } else if (values.password.length < 6) {
+    errors.password = 'Password must be minimum 6 characters long'
+  }
+
+  if (!values.passwordConfirmation) {
+    errors.passwordConfirmation = 'Password confirmation required'
+  } else if (!errors.password && values.password !== values.passwordConfirmation) {
+    errors.passwordConfirmation = 'Password confirmation doesn\'t match the password'
+  }
+
+  return errors
+}
+
+
+export const SignupStepOne = reduxForm({
+  form: 'stepOne',
+  validate,
+  onSubmit: x => x
+})(SignupStepOneComponent)
