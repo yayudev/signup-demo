@@ -16,7 +16,6 @@ export class DropdownInput extends Component {
     selectedValue: '',
     values: [],
     navigable: true,
-    onChange: _ => {}
   }
 
 
@@ -29,7 +28,7 @@ export class DropdownInput extends Component {
 
   handleChange (event) {
     if (this.props.onChange)
-      this.props.onChange(event.target.value)
+      this.props.onChange(event)
   }
 
 
@@ -37,12 +36,6 @@ export class DropdownInput extends Component {
     return (
       <option key={index} value={value} className="option">
         {value}
-
-        <style jsx>{`
-          .option {
-            text-transform: capitalize;
-          }
-      `}</style>
       </option>
     )
   }
@@ -60,7 +53,7 @@ export class DropdownInput extends Component {
           onChange={this.handleChange}
           tabIndex={tabindex}
         >
-          <option value=" " className="option" disabled></option>
+          <option value="" className="option" disabled></option>
 
           {values.map(this.renderDropdownOption)}
         </select>

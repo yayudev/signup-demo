@@ -25,8 +25,8 @@ export class SignupStepTwoComponent extends Component {
   }
 
 
-  renderDateInput ({ input, meta: { touched, error } }) {
-    return (
+  renderDateInput () {
+    return ({ input, meta: { touched, error } }) => (
       <DateInput
         name="birthDate"
         text="Birth date"
@@ -38,8 +38,8 @@ export class SignupStepTwoComponent extends Component {
     )
   }
 
-  renderSwitchInput ({ input, meta: { touched, error } }) {
-    return (
+  renderSwitchInput () {
+    return ({ input, meta: { touched, error } }) => (
       <SwitchInput
         text="Gender"
         error={touched && error}
@@ -51,8 +51,8 @@ export class SignupStepTwoComponent extends Component {
     )
   }
 
-  renderDropdownInput ({ input, meta: { touched, error } }) {
-    return (
+  renderDropdownInput () {
+    return ({ input, meta: { touched, error } }) => (
       <DropdownInput
         text="Where did you hear about us?"
         error={touched && error}
@@ -73,9 +73,9 @@ export class SignupStepTwoComponent extends Component {
 
     return (
       <form className={containerClasses} onSubmit={handleSubmit}>
-        <Field name="birthDate" component={this.renderDateInput} />
-        <Field name="gender" component={this.renderSwitchInput} />
-        <Field name="howHearAboutUs" component={this.renderDropdownInput} />
+        <Field name="birthDate" component={this.renderDateInput()} />
+        <Field name="gender" component={this.renderSwitchInput()} />
+        <Field name="howHearAboutUs" component={this.renderDropdownInput()} />
 
         <style jsx>{`
           .container {
@@ -127,7 +127,6 @@ function validate (values) {
   } else if (getAge(year, month, day) < 18) {
     errors.birthDate = 'You must be at least 18 years old'
   }
-  console.log(year.length !== 4, errors)
 
   return errors
 }
@@ -137,7 +136,7 @@ export const SignupStepTwo = reduxForm({
   initialValues: {
     birthDate: { day: '', month: '', year: '' },
     gender: { index: 2, text: 'Unspecified' },
-    howHearAboutUs: ''
+    howHearAboutUs: ' '
   },
   validate,
   onSubmit: x => x

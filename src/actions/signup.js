@@ -2,9 +2,11 @@ import { submit } from 'redux-form'
 
 export const NEXT_STEP = 'signup/NEXT_STEP'
 export const PREVIOUS_STEP = 'signup/PREVIOUS_STEP'
+export const RESET = 'signup/RESET'
 
 export const nextStep = () => ({ type: NEXT_STEP })
 export const prevStep = () => ({ type: PREVIOUS_STEP })
+export const reset = () => ({ type: RESET })
 
 
 export function goToNextStep () {
@@ -25,5 +27,22 @@ export function goToNextStep () {
     }
 
     dispatch(nextStep())
+  }
+}
+
+export function completeForm () {
+  return (dispatch, getState) => {
+    const state = getState()
+    const { stepOne, stepTwo } = state.form
+    const { birthDate } = stepTwo.values
+
+    console.log({
+      ...stepOne.values,
+      ...stepTwo.values,
+      gender: stepTwo.values.gender.text,
+      birthDate: `${birthDate.day}/${birthDate.month}/${birthDate.year}`
+    })
+
+    dispatch(reset())
   }
 }

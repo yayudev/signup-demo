@@ -1,30 +1,32 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
+import { SignupActions } from '../actions'
 import { BigButton, CheckAnimation } from '../components'
 
 
-export class SignupStepThree extends Component {
+export class SignupStepThreeComponent extends Component {
   static propTypes = {
     step: PropTypes.number,
     onClick: PropTypes.func
   }
 
   static defaultProps = {
-    step: 1,
-    onClick: _ => {}
+    step: 1
   }
 
 
   constructor (props) {
     super(props)
 
-    this.handleClick = this.handleClick.bind(this)
+    this.handleButtonClick = this.handleButtonClick.bind(this)
   }
 
 
-  handleClick () {
-    if (this.props.onClick)
-      this.props.onClick()
+  handleButtonClick () {
+    if (this.props.onButtonClick)
+      this.props.onButtonClick()
   }
 
 
@@ -40,7 +42,7 @@ export class SignupStepThree extends Component {
           text="Go to Dashboard"
           icon="arrow_forward"
           navigable={isShowing}
-          onClick={this.handleClick}
+          onClick={this.handleButtonClick}
         />
 
         <style jsx>{`
@@ -70,3 +72,10 @@ export class SignupStepThree extends Component {
   }
 }
 
+
+const mapActionsToProps = {
+  onButtonClick: SignupActions.completeForm
+}
+
+
+export const SignupStepThree = connect(null, mapActionsToProps)(SignupStepThreeComponent)
