@@ -1,7 +1,7 @@
 import { SignupActions } from '../actions'
 
 const defaultState = {
-  step: 1,
+  step: 2,
   title: 'Signup'
 }
 

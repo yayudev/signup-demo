@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
+import { Field, reduxForm } from 'redux-form'
+import isValidDate from 'is-valid-date'
+
 import { DateInput, SwitchInput, DropdownInput } from '../components'
+
 
 const genderValues = ['Male', 'Female', 'Unspecified']
 const dropdownValues = ['Internet', 'From a friend', 'Other']
 
 
-export class SignupStepTwo extends Component {
+export class SignupStepTwoComponent extends Component {
   constructor(props) {
     super(props)
 
@@ -20,35 +24,46 @@ export class SignupStepTwo extends Component {
     }
   }
 
-  renderDateInput () {
+
+  renderDateInput ({ input, meta: { touched, error } }) {
     return (
       <DateInput
         name="birthDate"
         text="Birth date"
+        onBlur={input.onBlur}
+        touched={touched}
+        error={error}
         navigable={this.props.step === 2}
       />
     )
   }
 
-  renderSwitchInput () {
+  renderSwitchInput ({ input, meta: { touched, error } }) {
     return (
       <SwitchInput
         text="Gender"
+        error={touched && error}
         values={genderValues}
+        selectedValue={input && input.value && input.value.index}
+        onChange={input.onChange}
         navigable={this.props.step === 2}
       />
     )
   }
 
-  renderDropdownInput () {
+  renderDropdownInput ({ input, meta: { touched, error } }) {
     return (
       <DropdownInput
         text="Where did you hear about us?"
+        error={touched && error}
         values={dropdownValues}
+        selectedValue={input.value}
+        onChange={input.onChange}
         navigable={this.props.step === 2}
       />
     )
   }
+
 
   render () {
     const { step, handleSubmit } = this.props
@@ -58,9 +73,9 @@ export class SignupStepTwo extends Component {
 
     return (
       <form className={containerClasses} onSubmit={handleSubmit}>
-        { this.renderDateInput() }
-        { this.renderSwitchInput() }
-        { this.renderDropdownInput() }
+        <Field name="birthDate" component={this.renderDateInput} />
+        <Field name="gender" component={this.renderSwitchInput} />
+        <Field name="howHearAboutUs" component={this.renderDropdownInput} />
 
         <style jsx>{`
           .container {
@@ -91,3 +106,39 @@ export class SignupStepTwo extends Component {
     )
   }
 }
+
+
+function getAge (year, month, day) {
+  const birthday = new Date(year, month - 1, day)
+  const ageDifMs = Date.now() - birthday.getTime();
+  const ageDate = new Date(ageDifMs);
+  return Math.abs(ageDate.getUTCFullYear() - 1970);
+}
+
+function validate (values) {
+  const errors = {}
+  const { day, month, year } = values.birthDate
+  const date = `${day}/${month}/${year}`
+
+  if (!day || !month || !year) {
+    errors.birthDate = 'Birth date is required'
+  } else if (year.length !== 4 || !isValidDate(date)) {
+    errors.birthDate = 'Birth date must have be a valid date'
+  } else if (getAge(year, month, day) < 18) {
+    errors.birthDate = 'You must be at least 18 years old'
+  }
+  console.log(year.length !== 4, errors)
+
+  return errors
+}
+
+export const SignupStepTwo = reduxForm({
+  form: 'stepTwo',
+  initialValues: {
+    birthDate: { day: '', month: '', year: '' },
+    gender: { index: 2, text: 'Unspecified' },
+    howHearAboutUs: ''
+  },
+  validate,
+  onSubmit: x => x
+})(SignupStepTwoComponent)

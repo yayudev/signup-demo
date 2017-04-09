@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Field } from 'redux-form'
+
 import {
   MAIN_COLOR,
   BORDER_COLOR,
+  SUCCESS_TEXT_COLOR,
   DANGER_TEXT_COLOR
 } from '../../config/colors'
 
@@ -12,12 +15,14 @@ export class DateInput extends Component {
     name: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
     error: PropTypes.string,
+    touched: PropTypes.bool,
     navigable: PropTypes.bool,
     onBlur: PropTypes.func
   }
 
   static defaultProps = {
     error: '',
+    touched: false,
     navigable: true,
     onBlur: _ => {}
   }
@@ -29,23 +34,27 @@ export class DateInput extends Component {
   }
 
 
-  handleBlur (event) {
+  handleBlur () {
     if (this.props.onBlur)
-      this.props.onBlur(event)
+      this.props.onBlur()
   }
 
 
   render () {
-    const { name, text, error, navigable } = this.props
-    const labelClasses =  error ? 'date-input-label error' : 'date-input-label'
+    const { name, text, error, touched, navigable } = this.props
+    const errorClasses = touched && error
+        ? 'date-input-label error'
+        : 'date-input-label'
+    const labelClasses = touched ? `${errorClasses} touched` : errorClasses
     const tabindex = navigable ? '0' : '-1'
 
     return (
       <div className="date-input-container">
-        <label className={labelClasses}>{error || text}</label>
+        <label className={labelClasses}>{(touched && error) || text}</label>
 
         <div className="date-input-group">
-          <input
+          <Field
+            component="input"
             name={`${name}.day`}
             type="number"
             tabIndex={tabindex}
@@ -55,7 +64,8 @@ export class DateInput extends Component {
             placeholder="DD"
             onBlur={this.handleBlur}
           />
-          <input
+          <Field
+            component="input"
             name={`${name}.month`}
             type="number"
             tabIndex={tabindex}
@@ -65,7 +75,8 @@ export class DateInput extends Component {
             placeholder="MM"
             onBlur={this.handleBlur}
           />
-          <input
+          <Field
+            component="input"
             name={`${name}.year`}
             type="number"
             tabIndex={tabindex}
@@ -77,6 +88,7 @@ export class DateInput extends Component {
           />
         </div>
 
+
         <style jsx global>{`
           .date-input-container {
             width: calc(100% - 4em);
@@ -86,6 +98,13 @@ export class DateInput extends Component {
             display: block;
             margin: 1.5em 0 1em;
             text-transform: uppercase;
+          }
+
+          .date-input-label.touched {
+            color: ${SUCCESS_TEXT_COLOR};
+          }
+          .date-input-label.touched + .date-input-group {
+            border-color: ${SUCCESS_TEXT_COLOR};
           }
 
           .date-input-label.error {

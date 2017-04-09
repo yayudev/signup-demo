@@ -11,10 +11,17 @@ export function goToNextStep () {
   return (dispatch, getState) => {
     const state = getState()
     const step = state.signup.step
-    const stepOneHasErrors = state.form.stepOne.syncErrors && Object.keys(state.form.stepOne.syncErrors).length !== 0
+    const stepOneHasErrors = state.form.stepOne.syncErrors &&
+      Object.keys(state.form.stepOne.syncErrors).length !== 0
+    const stepTWOHasErrors = state.form.stepTwo.syncErrors &&
+      Object.keys(state.form.stepTwo.syncErrors).length !== 0
 
     if (step === 1 && stepOneHasErrors) {
       return dispatch(submit('stepOne'))
+    }
+
+    if (step === 2 && stepTWOHasErrors) {
+      return dispatch(submit('stepTwo'))
     }
 
     dispatch(nextStep())
