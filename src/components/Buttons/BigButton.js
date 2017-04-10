@@ -71,13 +71,11 @@ export class BigButton extends Component {
             font-size: 1.2em;
             font-weight: lighter;
             transition: background-color 200ms ease-in-out,
-                        color 200ms ease-in-out,
-                        transform 200ms ease-in-out;
+                        color 200ms ease-in-out;
             will-change: transform;
           }
 
-          .button:focus,
-          .button:hover {
+          .button:focus, .button:hover {
             color: white;
             background-color: ${MAIN_COLOR};
           }

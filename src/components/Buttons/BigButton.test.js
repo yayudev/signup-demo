@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import { BigButton } from './BigButton'
 import { SPACE_KEY, ENTER_KEY } from '../../config/keys'
 
@@ -47,7 +47,7 @@ test(`It should set tabindex="0" if 'navigable' prop equals to 'true'`, () => {
 
 test(`It should call 'onClick' prop fn on 'click' event`, () => {
   const onClickHandler = jest.fn()
-  const component = mount(<BigButton text="Test" onClick={onClickHandler} />)
+  const component = shallow(<BigButton text="Test" onClick={onClickHandler} />)
 
   component.simulate('click')
 
@@ -56,7 +56,7 @@ test(`It should call 'onClick' prop fn on 'click' event`, () => {
 
 test(`It should call 'onClick' prop fn on 'ENTER' keypress`, () => {
   const onClickHandler = jest.fn()
-  const component = mount(<BigButton text="Test" onClick={onClickHandler} />)
+  const component = shallow(<BigButton text="Test" onClick={onClickHandler} />)
 
   component.simulate('keypress', { charCode: ENTER_KEY })
 
@@ -65,7 +65,7 @@ test(`It should call 'onClick' prop fn on 'ENTER' keypress`, () => {
 
 test(`It should call 'onClick' prop fn on 'SPACE' keypress`, () => {
   const onClickHandler = jest.fn()
-  const component = mount(<BigButton text="Test" onClick={onClickHandler} />)
+  const component = shallow(<BigButton text="Test" onClick={onClickHandler} />)
 
   component.simulate('keypress', { charCode: SPACE_KEY })
 
