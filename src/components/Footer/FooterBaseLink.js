@@ -6,13 +6,12 @@ import { SPACE_KEY, ENTER_KEY } from '../../config/keys'
 
 export class FooterBaseLink extends Component {
   static propTypes = {
-    navigable: PropTypes.bool.isRequired,
+    navigable: PropTypes.bool,
     onClick: PropTypes.func
   }
 
   static defaultProps = {
-    navigable: true,
-    onClick: _ => {}
+    navigable: true
   }
 
   constructor (props) {
@@ -37,5 +36,9 @@ export class FooterBaseLink extends Component {
 
   getTabIndex () {
     return this.props.navigable ? '0' : '-1'
+  }
+
+  render () {
+    return null
   }
 }
