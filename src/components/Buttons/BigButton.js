@@ -1,20 +1,19 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { MAIN_COLOR } from '../../config/colors'
-import { SPACE_KEY } from '../../config/keys'
+import { SPACE_KEY, ENTER_KEY } from '../../config/keys'
 
 
 export class BigButton extends Component {
   static propTypes = {
     text: PropTypes.string.isRequired,
-    icon: PropTypes.string.isRequired,
+    icon: PropTypes.string,
     navigable: PropTypes.bool,
     onClick: PropTypes.func
   }
 
   static defaultProps = {
-    navigable: true,
-    onClick: _ => {}
+    navigable: true
   }
 
 
@@ -32,7 +31,10 @@ export class BigButton extends Component {
   }
 
   handleKeyPress (event) {
-    if (this.props.onClick && event.charCode === SPACE_KEY)
+    const spacePressed = event.charCode === SPACE_KEY
+    const enterPressed = event.charCode === ENTER_KEY
+
+    if (this.props.onClick && (spacePressed || enterPressed))
       this.props.onClick(event)
   }
 
@@ -49,7 +51,7 @@ export class BigButton extends Component {
         onClick={this.handleClick}
         onKeyPress={this.handleKeyPress}
       >
-        <span className="text"> {text} </span>
+        <span className="text">{text}</span>
         {iconComponent}
 
         <style jsx>{`
