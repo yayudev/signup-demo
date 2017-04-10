@@ -8,9 +8,11 @@ const defaultState = {
 export function signupReducer(state = defaultState, action) {
   switch(action.type) {
     case SignupActions.NEXT_STEP:
+      const nextStep = state.step + 1
+
       return {
-        step: state.step < 3 ? state.step + 1 : state.step,
-        title: state.step === 3 ? 'Thank you!' : 'Signup'
+        step: state.step < 3 ? nextStep : state.step,
+        title: nextStep === 3 ? 'Thank you!' : 'Signup'
       }
 
     case SignupActions.PREVIOUS_STEP:
