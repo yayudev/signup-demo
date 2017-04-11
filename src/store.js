@@ -4,7 +4,9 @@ import thunk from 'redux-thunk'
 
 import { signupReducer } from './reducers'
 
-let window = window || null
+let windowGlobal = window === undefined
+  ? window
+  : null
 
 const middleware = [
   thunk
@@ -15,7 +17,7 @@ const reducer = combineReducers({
   signup: signupReducer
 })
 
-const composeEnhancers = (window && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+const composeEnhancers = (windowGlobal && windowGlobal.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
 const storeEnhancers = composeEnhancers(applyMiddleware(...middleware))
 

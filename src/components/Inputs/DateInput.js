@@ -23,8 +23,7 @@ export class DateInput extends Component {
   static defaultProps = {
     error: '',
     touched: false,
-    navigable: true,
-    onBlur: _ => {}
+    navigable: true
   }
 
   constructor (props) {
