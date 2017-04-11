@@ -9,7 +9,8 @@ export class SwitchInput extends Component {
     text: PropTypes.string.isRequired,
     selectedValue: PropTypes.number,
     values: PropTypes.arrayOf(PropTypes.string),
-    navigable: PropTypes.bool
+    navigable: PropTypes.bool,
+    onChange: PropTypes.func
   }
 
   static defaultProps = {
@@ -56,7 +57,7 @@ export class SwitchInput extends Component {
         className={styleClasses}
         onClick={this.handleChange.bind(null, selectedItem)}
       >
-        {value}
+        <span className="label">{value}</span>
 
         <style jsx>{`
           .button {
