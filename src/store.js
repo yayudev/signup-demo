@@ -4,9 +4,10 @@ import thunk from 'redux-thunk'
 
 import { signupReducer } from './reducers'
 
-let windowGlobal = window === undefined
-  ? window
-  : null
+let windowGlobal
+
+if (typeof(window) !== 'undefined')
+  windowGlobal = window
 
 const middleware = [
   thunk
