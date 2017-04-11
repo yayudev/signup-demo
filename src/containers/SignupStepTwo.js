@@ -141,3 +141,6 @@ export const SignupStepTwo = reduxForm({
   validate,
   onSubmit: x => x
 })(SignupStepTwoComponent)
+
+// For testing purposes only
+export const SignupStepTwoValidate = validate

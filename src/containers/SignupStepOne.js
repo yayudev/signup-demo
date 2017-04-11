@@ -5,7 +5,7 @@ import { Field, reduxForm  } from 'redux-form'
 import { GenericInput } from '../components'
 
 
-class SignupStepOneComponent extends Component {
+export class SignupStepOneComponent extends Component {
   static propTypes = {
     step: PropTypes.number
   }
@@ -105,3 +105,5 @@ export const SignupStepOne = reduxForm({
   validate,
   onSubmit: x => x
 })(SignupStepOneComponent)
+
+export const SignupStepOneValidate = validate
