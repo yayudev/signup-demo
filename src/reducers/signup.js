@@ -21,6 +21,12 @@ export function signupReducer(state = defaultState, action) {
         title: 'Signup'
       }
 
+    case SignupActions.RESET:
+      return {
+        step: 1,
+        title: 'Signup'
+      }
+
     default:
       return state
   }

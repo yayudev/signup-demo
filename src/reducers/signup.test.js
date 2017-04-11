@@ -45,3 +45,16 @@ describe('SignupActions.PREVIOUS_STEP', () => {
     expect(nextState.title).toEqual('Signup')
   })
 })
+
+
+describe('SignupActions.RESET', () => {
+  test('it should set step to 1 on RESET', () => {
+    const mockState = { step: 3, title: 'Thank you!' }
+    const action = SignupActions.reset()
+
+    const nextState = signupReducer(mockState, action)
+
+    expect(nextState.step).toEqual(1)
+    expect(nextState.title).toEqual('Signup')
+  })
+})

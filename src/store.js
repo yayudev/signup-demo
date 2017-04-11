@@ -4,22 +4,26 @@ import thunk from 'redux-thunk'
 
 import { signupReducer } from './reducers'
 
-let windowGlobal
 
-if (typeof(window) !== 'undefined')
-  windowGlobal = window
+// Workaround to allow the window to exist while SSR'ing
+const windowGlobal = typeof(window) !== 'undefined' ? window : null
 
-const middleware = [
-  thunk
-]
 
+// Setup reducers
 const reducer = combineReducers({
   form: formReducer,
   signup: signupReducer
 })
 
-const composeEnhancers = (windowGlobal && windowGlobal.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
-const storeEnhancers = composeEnhancers(applyMiddleware(...middleware))
+// Setup middleware
+const composeEnhancers =
+  (windowGlobal && windowGlobal.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__)
+  || compose;
+
+const storeEnhancers = composeEnhancers(
+  applyMiddleware(thunk)
+)
+
 
 export const store = createStore(reducer, storeEnhancers)

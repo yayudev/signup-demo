@@ -82,8 +82,10 @@ describe('goToNextStep()', () => {
 
     expect(dispatchedAction.type).toEqual(submit('stepTwo').type)
   })
+})
 
-  test('completeForm should dispatch RESET', async () => {
+describe('completeForm()', () => {
+  test('completeForm should dispatch 3 actions', async () => {
     const getMockState = _ => ({
       signup: { step: 2 },
       form: {
@@ -104,9 +106,45 @@ describe('goToNextStep()', () => {
         }
       }
     })
+    const dispatch = jest.fn()
     const thunk = SignupActions.completeForm()
-    const dispatchedAction = await new Promise(resolve => thunk(resolve, getMockState))
 
-    expect(dispatchedAction.type).toEqual(SignupActions.RESET)
+    thunk(dispatch, getMockState)
+
+    expect(dispatch).toHaveBeenCalledTimes(3)
+  })
+
+  test('completeForm should dispatch 2 form-reset actions and a signup/RESET action', async () => {
+    const getMockState = _ => ({
+      signup: { step: 2 },
+      form: {
+        stepOne: {
+          values: {}
+        },
+        stepTwo: {
+          values: {
+            gender: {
+              text: 'hello'
+            },
+            birthDate: {
+              day: '10',
+              month: '06',
+              year: '1995'
+            }
+          }
+        }
+      }
+    })
+    const dispatch = jest.fn()
+    const thunk = SignupActions.completeForm()
+
+    thunk(dispatch, getMockState)
+
+    const expectedActions = [
+      [{ type: '@@redux-form/RESET', meta: { form: 'stepOne' } }],
+      [{ type: '@@redux-form/RESET', meta: { form: 'stepTwo' } }],
+      [{ type: 'signup/RESET' }]
+    ]
+    expect(dispatch.mock.calls).toEqual(expectedActions)
   })
 })

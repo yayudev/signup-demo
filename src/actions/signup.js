@@ -1,4 +1,4 @@
-import { submit } from 'redux-form'
+import { submit, reset as resetForm } from 'redux-form'
 
 export const NEXT_STEP = 'signup/NEXT_STEP'
 export const PREVIOUS_STEP = 'signup/PREVIOUS_STEP'
@@ -45,6 +45,8 @@ export function completeForm () {
       birthDate: `${birthDate.day}/${birthDate.month}/${birthDate.year}`
     })
 
+    dispatch(resetForm('stepOne'))
+    dispatch(resetForm('stepTwo'))
     dispatch(reset())
   }
 }
