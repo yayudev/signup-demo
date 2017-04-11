@@ -10,56 +10,41 @@ const dropdownValues = ['Internet', 'From a friend', 'Other']
 
 
 export class SignupStepTwoComponent extends Component {
-  constructor(props) {
-    super(props)
-
-    this.renderDateInput = this.renderDateInput.bind(this)
-    this.renderSwitchInput = this.renderSwitchInput.bind(this)
-    this.renderDropdownInput = this.renderDropdownInput.bind(this)
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.step !== prevProps.step) {
-      this.forceUpdate()
-    }
-  }
-
-
-  renderDateInput () {
-    return ({ input, meta: { touched, error } }) => (
+  renderDateInput ({ input, meta: { touched, error }, step }) {
+    return (
       <DateInput
         name="birthDate"
         text="Birth date"
         onBlur={input.onBlur}
         touched={touched}
         error={error}
-        navigable={this.props.step === 2}
+        navigable={step === 2}
       />
     )
   }
 
-  renderSwitchInput () {
-    return ({ input, meta: { touched, error } }) => (
+  renderSwitchInput ({ input, meta: { touched, error }, step }) {
+    return (
       <SwitchInput
         text="Gender"
         error={touched && error}
         values={genderValues}
         selectedValue={input && input.value && input.value.index}
         onChange={input.onChange}
-        navigable={this.props.step === 2}
+        navigable={step === 2}
       />
     )
   }
 
-  renderDropdownInput () {
-    return ({ input, meta: { touched, error } }) => (
+  renderDropdownInput ({ input, meta: { touched, error }, step }) {
+    return (
       <DropdownInput
         text="Where did you hear about us?"
         error={touched && error}
         values={dropdownValues}
         selectedValue={input.value}
         onChange={input.onChange}
-        navigable={this.props.step === 2}
+        navigable={step === 2}
       />
     )
   }
@@ -73,9 +58,9 @@ export class SignupStepTwoComponent extends Component {
 
     return (
       <form className={containerClasses} onSubmit={handleSubmit}>
-        <Field name="birthDate" component={this.renderDateInput()} />
-        <Field name="gender" component={this.renderSwitchInput()} />
-        <Field name="howHearAboutUs" component={this.renderDropdownInput()} />
+        <Field name="birthDate" component={this.renderDateInput} props={this.props} />
+        <Field name="gender" component={this.renderSwitchInput} props={this.props} />
+        <Field name="howHearAboutUs" component={this.renderDropdownInput} props={this.props} />
 
         <style jsx>{`
           .container {

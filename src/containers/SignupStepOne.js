@@ -18,10 +18,13 @@ export class SignupStepOneComponent extends Component {
     super(props)
 
     this.createGenericInput = this.createGenericInput.bind(this)
+    this.renderEmailInput = this.renderEmailInput.bind(this)
+    this.renderPasswordInput = this.renderPasswordInput.bind(this)
+    this.renderPasswordConfirmationInput = this.renderPasswordConfirmationInput.bind(this)
   }
 
   createGenericInput (label, isPassword = false) {
-    return ({ input, meta: { touched, error } }) => (
+    return ({ input, meta: { touched, error }, step }) => (
       <GenericInput
         text={label}
         error={error}
@@ -30,24 +33,47 @@ export class SignupStepOneComponent extends Component {
         isPassword={isPassword}
         onChange={input.onChange}
         onBlur={input.onBlur}
-        navigable={this.props.step === 1}
+        navigable={step === 1}
       />
     )
   }
 
+  renderEmailInput (props) {
+    const component = this.createGenericInput('Email')
+    return component(props)
+  }
+
+  renderPasswordInput(props) {
+    const component = this.createGenericInput('Password', true)
+    return component(props)
+  }
+
+  renderPasswordConfirmationInput(props) {
+    const component = this.createGenericInput('Confirm Password', true)
+    return component(props)
+  }
+
   render () {
     const { step, handleSubmit } = this.props
-    const emailComponent = this.createGenericInput('Email')
-    const passwordComponent = this.createGenericInput('Password', true)
-    const confirmPasswordComponent = this.createGenericInput('Confirm Password', true)
-
     const containerClasses = step === 1 ? 'container show' : 'container'
 
     return (
       <form className={containerClasses} onSubmit={handleSubmit}>
-        <Field name="email" component={emailComponent} />
-        <Field name="password" component={passwordComponent} />
-        <Field name="passwordConfirmation" component={confirmPasswordComponent} />
+        <Field
+          name="email"
+          component={this.renderEmailInput}
+          props={this.props}
+        />
+        <Field
+          name="password"
+          component={this.renderPasswordInput}
+          props={this.props}
+        />
+        <Field
+          name="passwordConfirmation"
+          component={this.renderPasswordConfirmationInput}
+          props={this.props}
+        />
 
         <style jsx>{`
           .container {
