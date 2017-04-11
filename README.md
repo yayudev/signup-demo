@@ -1,4 +1,4 @@
-# Signup demo
+# Signup demo ![](https://travis-ci.org/datyayu/signup-demo.svg?branch=master)
 
 Multi-step signup build using react + redux.
 
