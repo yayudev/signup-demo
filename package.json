@@ -28,7 +28,7 @@
     "start-server": "NODE_ENV=production node index.js",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "jest --env=jsdom",
+    "test": "jest",
     "eject": "react-app-rewired eject"
   }
 }
