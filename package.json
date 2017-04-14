@@ -20,6 +20,7 @@
     "react-app-rewired": "^0.6.5",
     "react-scripts": "0.9.5",
     "react-test-renderer": "^15.5.4",
+    "regenerator-runtime": "^0.10.3",
     "styled-jsx": "^0.5.7"
   },
   "scripts": {
