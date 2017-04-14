@@ -5,19 +5,19 @@ import { SPACE_KEY } from '../../config/keys'
 
 
 test('It should render the component without crashing', () => {
-  shallow(<GenericInput text="Test" />)
+  shallow(<GenericInput text="Test" value="test" />)
 })
 
 describe('navigable', () => {
   test(`It should include tabindex="-1" if 'navigable' prop equals 'false'`, () => {
-    const component = shallow(<GenericInput text="Test" navigable={false} />)
+    const component = shallow(<GenericInput text="Test" navigable={false} value="test" />)
     const html = component.html()
 
     expect(html.includes('tabindex="-1"')).toBe(true)
   })
 
   test(`It should include tabindex="0" if 'navigable' prop equals 'true'`, () => {
-    const component = shallow(<GenericInput text="Test" navigable={true} />)
+    const component = shallow(<GenericInput text="Test" navigable={true} value="test" />)
     const html = component.html()
 
     expect(html.includes('tabindex="0"')).toBe(true)
@@ -26,7 +26,7 @@ describe('navigable', () => {
 
 describe('text', () => {
   test(`It should render a label using the 'text' prop`, () => {
-    const component = shallow(<GenericInput text="Test" />)
+    const component = shallow(<GenericInput text="Test" value="test" />)
     const label = component.find('label').first()
 
     expect(label.text()).toEqual('Test')
@@ -35,14 +35,14 @@ describe('text', () => {
 
 describe('isPassword', () => {
   test(`It should render the input with type="text" if 'isPassword' prop equals 'false'`, () => {
-    const component = shallow(<GenericInput text="Test" isPassword={false} />)
+    const component = shallow(<GenericInput text="Test" isPassword={false} value="test" />)
     const html = component.html()
 
     expect(html.includes('type="text"')).toBe(true)
   })
 
   test(`It should render the input with type="password" if 'isPassword' prop equals 'true'`, () => {
-    const component = shallow(<GenericInput text="Test" isPassword={true} />)
+    const component = shallow(<GenericInput text="Test" isPassword={true} value="test" />)
     const html = component.html()
 
     expect(html.includes('type="password"')).toBe(true)
@@ -51,14 +51,14 @@ describe('isPassword', () => {
 
 describe('touched', () => {
   test(`It shouldn't add the .touched class if the 'touched' prop equals 'false'`, () => {
-    const component = shallow(<GenericInput text="Test" touched={false} />)
+    const component = shallow(<GenericInput text="Test" touched={false} value="test" />)
     const input = component.find('label').first()
 
     expect(input.hasClass('touched')).toBe(false)
   })
 
   test(`It should add the .touched class if the 'touched' prop equals 'true'`, () => {
-    const component = shallow(<GenericInput text="Test" touched={true} />)
+    const component = shallow(<GenericInput text="Test" touched={true} value="test" />)
     const input = component.find('label').first()
 
     expect(input.hasClass('touched')).toBe(true)
@@ -67,21 +67,35 @@ describe('touched', () => {
 
 describe('error', () => {
   test(`it should add the .error class if the 'error' prop has value and the 'touched' equals 'true'`, () => {
-    const component = shallow(<GenericInput text="Test" error="Test error" touched={true} />)
+    const component = shallow(
+      <GenericInput
+        text="Test"
+        error="Test error"
+        touched={true}
+        value="test"
+      />
+    )
     const input = component.find('label').first()
 
     expect(input.hasClass('error')).toBe(true)
   })
 
   test(`it shouldn't add the .error class if the 'error' prop has value and the 'touched' equals 'false'`, () => {
-    const component = shallow(<GenericInput text="Test" error="Test error" touched={false} />)
+    const component = shallow(
+      <GenericInput
+        text="Test"
+        error="Test error"
+        touched={false}
+        value="test"
+      />
+    )
     const input = component.find('label').first()
 
     expect(input.hasClass('error')).toBe(false)
   })
 
   test(`it shouldn't add the .error class if the 'error' prop has no value`, () => {
-    const component = shallow(<GenericInput text="Test" touched={true} />)
+    const component = shallow(<GenericInput text="Test" touched={true} value="test" />)
     const input = component.find('label').first()
 
     expect(input.hasClass('error')).toBe(false)
@@ -100,7 +114,7 @@ describe('value', () => {
 describe('onBlur', () => {
   test(`It should call the 'onBlur' prop when input is blured`, () => {
     const blurHandler = jest.fn()
-    const component = shallow(<GenericInput text="Test" onBlur={blurHandler} />)
+    const component = shallow(<GenericInput text="Test" onBlur={blurHandler} value="test" />)
 
     component.find('input').simulate('blur')
 
@@ -111,7 +125,7 @@ describe('onBlur', () => {
 describe('onChange', () => {
   test(`It should call the 'onChange' prop when input changes`, () => {
     const changeHandler = jest.fn()
-    const component = shallow(<GenericInput text="Test" onChange={changeHandler} />)
+    const component = shallow(<GenericInput text="Test" value="test" onChange={changeHandler} />)
 
     component.find('input').simulate('change', { target: { value: 'hey' } })
 
@@ -120,7 +134,7 @@ describe('onChange', () => {
 
   test(`It should call the 'onChange' prop with the input value when input changes`, () => {
     const changeHandler = jest.fn()
-    const component = shallow(<GenericInput text="Test" onChange={changeHandler} />)
+    const component = shallow(<GenericInput text="Test" value="test" onChange={changeHandler} />)
 
     component.find('input').simulate('change', { target: { value: 'hey' } })
 

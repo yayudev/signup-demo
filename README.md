@@ -29,6 +29,4 @@ To run the tests you can use:
 $ yarn test # Or npm test
 ```
 
-Please be aware that, due to [the latest react changes](https://facebook.github.io/react/blog/2017/04/07/react-v15.5.0.html), the tests may have some warnings because of the dependencies (specifically enzyme and redux-form) not having been updated with the 15.5 changes (`TestUtils` and `PropTypes`, respectively).
-
-Will update as soon as they release a v15.5-compatible version.
+Please be aware that some warnings may appear when running the tests (something like `Warning: Unknown prop 'jsx' on <style> tag`). This is an ongoing issue with styled-jsx, and will fix as soon as possible.
