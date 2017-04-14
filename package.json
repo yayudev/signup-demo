@@ -14,6 +14,7 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
+    "babel-jest": "^19.0.0",
     "enzyme": "^2.8.2",
     "react-app-rewired": "^0.6.5",
     "react-scripts": "0.9.5",
@@ -25,7 +26,7 @@
     "start-server": "NODE_ENV=production node index.js",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "react-app-rewired test --env=jsdom",
+    "test": "jest --env=jsdom",
     "eject": "react-app-rewired eject"
   }
 }
