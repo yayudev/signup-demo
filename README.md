@@ -29,4 +29,4 @@ To run the tests you can use:
 $ yarn test # Or npm test
 ```
 
-Please be aware that some warnings may appear when running the tests (something like `Warning: Unknown prop 'jsx' on <style> tag`). This is an ongoing issue with styled-jsx, and will fix as soon as possible.
+There are two console.logs on the signup actions tests, this are intended side effects, so no need to worry about it.
